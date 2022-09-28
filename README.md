@@ -1,14 +1,10 @@
 # Progressive-Web-Applications
-
-
-## Description
-
+A text editor that runs in the browser. The app will be a single-page application that meets the PWA criteria. Additionally, it will feature a number of data persistence techniques that serve as redundancies in case one of the options is not supported by the browser. The application will also function offline.
 
 ### User Story
 ```
-AS A social media startup
-I WANT an API for my social network that uses a NoSQL database
-SO THAT my website can handle large amounts of unstructured data
+I WANT to create notes or code snippets with or without an internet connection
+SO THAT I can reliably retrieve them for later use
 ```
 
 ### Technology:
@@ -17,23 +13,9 @@ SO THAT my website can handle large amounts of unstructured data
 - Express.js
 - MongoDB
 - Mongoose
+- Concurrently
+- Webpack
 
-
-### Installation
-
-To run this project, install it locally using npm:
-
-```
-npm install
-```
-
-### Usage
-
-After installing npm packages, the application will be invoked by using the following command:
-
-```
-npm start
-```
 
 
 ## Contact or questions
