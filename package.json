@@ -17,6 +17,9 @@
     "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   },
+  "engines": {
+    "node": "17.x"
+  },
   "main": "server.js",
   "repository": {
     "type": "git",
