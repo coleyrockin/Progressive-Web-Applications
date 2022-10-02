@@ -8,7 +8,7 @@ SO THAT I can reliably retrieve them for later use
 ```
 
 ### Heroku Deployment
-[Link of deployment]()
+[Link of deployment](https://pwaalldaytexteditor.herokuapp.com/)
 
 ### Technology:
 - Javascript
