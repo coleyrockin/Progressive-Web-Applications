@@ -7,8 +7,13 @@ I WANT to create notes or code snippets with or without an internet connection
 SO THAT I can reliably retrieve them for later use
 ```
 
-### Heroku Deployment
-[Link of deployment](https://pwaalldaytexteditor.herokuapp.com/)
+### Deployment
+Public hosting is currently paused (the previous Heroku dyno was decommissioned). You can run the app locally with:
+1. `npm install`
+2. `npm run build`
+3. `npm start`
+
+To redeploy elsewhere, use any Node-friendly host (Render, Railway, Fly.io, etc.) that runs `npm run build` before starting `node server/server.js`.
 
 ### Technology:
 - Javascript
