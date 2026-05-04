@@ -10,7 +10,8 @@
     "postinstall": "cd client && npm install"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "helmet": "^8.1.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",

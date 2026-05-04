@@ -117,9 +117,11 @@ Future automated coverage (see *Future improvements*):
 - All editor input is local-only.
 - `.env` is git-ignored. `.env.example` is the shared template.
 - Server hardening:
+  - `helmet()` baseline security headers (CSP intentionally disabled — see *Future improvements*)
   - `X-Powered-By` disabled
   - JSON 404 for unknown routes
   - Generic 500 error handler
+  - Graceful shutdown on `SIGTERM` / `SIGINT`
 
 ## What I learned
 
@@ -137,7 +139,7 @@ Future automated coverage (see *Future improvements*):
 - Bundle CodeMirror locally so the editor is genuinely offline-first on first visit.
 - Migrate to CodeMirror v6 (`@codemirror/*`) for a smaller, modern API.
 - Add Playwright smoke tests and Lighthouse CI.
-- Add explicit security headers (CSP, Referrer-Policy, Permissions-Policy) on the server.
+- Bundle CodeMirror locally so a strict Content-Security-Policy can be re-enabled (currently disabled because `cdnjs.cloudflare.com` is required for the editor).
 - GitHub Actions: build + lint on push/PR.
 
 ## Author
