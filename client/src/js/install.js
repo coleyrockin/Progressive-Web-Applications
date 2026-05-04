@@ -1,8 +1,14 @@
 const butInstall = document.getElementById('buttonInstall');
 
+if (!butInstall) {
+  throw new Error('Install button not found in DOM.');
+}
+
+butInstall.classList.add('hidden');
+
 window.addEventListener('beforeinstallprompt', (event) => {
   window.deferredPrompt = event;
-  butInstall.classList.toggle('hidden', false);
+  butInstall.classList.remove('hidden');
 });
 
 butInstall.addEventListener('click', async () => {

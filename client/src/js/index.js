@@ -6,28 +6,37 @@ import '../css/style.css';
 const main = document.querySelector('#main');
 main.innerHTML = '';
 
-const loadSpinner = () => {
-  const spinner = document.createElement('div');
-  spinner.classList.add('spinner');
-  spinner.innerHTML = `
-  <div class="loading-container">
-  <div class="loading-spinner" />
-  </div>
+const showEditorFallback = (message) => {
+  main.innerHTML = `
+    <section class="editor-error" role="status" aria-live="polite">
+      <p>Unable to load the editor.</p>
+      <p>${message}</p>
+    </section>
   `;
-  main.appendChild(spinner);
 };
 
-const editor = new Editor();
+const initEditor = () => {
+  try {
+    new Editor();
+  } catch (error) {
+    console.error('Failed to initialize editor', error);
+    showEditorFallback(
+      'Please check your network connection and refresh, or disable strict browser extensions.'
+    );
+  }
+};
 
-if (typeof editor === 'undefined') {
-  loadSpinner();
-}
+initEditor();
 
 // Check if service workers are supported
 if ('serviceWorker' in navigator) {
   // register workbox service worker
   const workboxSW = new Workbox('/src-sw.js');
-  workboxSW.register();
+  workboxSW
+    .register()
+    .catch((error) => {
+      console.error('Service worker registration failed', error);
+    });
 } else {
-  console.error('Service workers are not supported in this browser.');
+  console.warn('Service workers are not supported in this browser.');
 }

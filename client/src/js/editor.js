@@ -4,6 +4,7 @@ import { header } from './header';
 export default class {
   constructor() {
     const localData = localStorage.getItem('content');
+    const fallbackContent = header.trim();
 
     // check if CodeMirror is loaded
     if (typeof CodeMirror === 'undefined') {
@@ -22,19 +23,28 @@ export default class {
     });
 
     // When the editor is ready, set the value to whatever is store in indexeddb
-    getDb().then((data) => {
-      console.info('Loaded data from IndexedDB, injecting into editor');
-      this.editor.setValue(data || localData || header);
-    });
+    getDb()
+      .then((data) => {
+        this.editor.setValue(data || localData || fallbackContent);
+      })
+      .catch(() => {
+        this.editor.setValue(localData || fallbackContent);
+      });
 
     this.editor.on('change', () => {
-      localStorage.setItem('content', this.editor.getValue());
+      try {
+        localStorage.setItem('content', this.editor.getValue());
+      } catch (error) {
+        console.warn('Unable to persist editor content in localStorage', error);
+      }
     });
 
     // Save the content of the editor when the editor itself is loses focus
     this.editor.on('blur', () => {
-      console.log('The editor has lost focus');
-      putDb(localStorage.getItem('content'));
+      const latestContent = localStorage.getItem('content') || '';
+      putDb(latestContent).catch((error) => {
+        console.error('Unable to persist editor content in IndexedDB', error);
+      });
     });
   }
 }
