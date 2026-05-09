@@ -9,6 +9,8 @@
 
 JATE is an installable Progressive Web App for writing notes and JavaScript snippets in the browser. It bundles the editor locally, precaches the app shell with Workbox, and persists drafts through IndexedDB with a `localStorage` fallback.
 
+[View the live app](https://jate-pwa-text-editor.vercel.app)
+
 ![JATE app screenshot](./assets/images/PMAtexteditor.png)
 
 ## Highlights
@@ -111,7 +113,6 @@ Progressive-Web-Applications/
 - Add Playwright smoke tests for persistence, offline reloads, and install behavior.
 - Add Lighthouse CI for PWA and accessibility checks.
 - Modernize older starter dependencies to reduce audit noise.
-- Add a hosted demo link.
 
 ## Author
 

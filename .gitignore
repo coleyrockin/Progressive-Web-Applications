@@ -13,6 +13,8 @@ client/node_modules
 # Build / coverage
 coverage
 *.log
+.vercel/
+client/dist/.vercel/
 
 # Local env (use .env.example to share variables)
 .env
