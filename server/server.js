@@ -7,12 +7,16 @@ const PORT = process.env.PORT || 3000;
 
 app.disable('x-powered-by');
 
-// Helmet baseline. CSP is disabled because the editor loads CodeMirror
-// from cdnjs.cloudflare.com; tightening CSP requires bundling CodeMirror
-// locally first (tracked in README "Future improvements").
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        'script-src': ["'self'"],
+        'style-src': ["'self'", "'unsafe-inline'"],
+        'worker-src': ["'self'"],
+      },
+    },
   })
 );
 
@@ -33,6 +37,15 @@ app.use((err, req, res, next) => {
 
 const server = app.listen(PORT, () => {
   console.log(`Now listening on port: ${PORT}`);
+});
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use. Set PORT to another value.`);
+  } else {
+    console.error('Server failed to start:', error);
+  }
+  process.exit(1);
 });
 
 const shutdown = (signal) => {

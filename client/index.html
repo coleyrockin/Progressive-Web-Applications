@@ -4,43 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>
-    <%= htmlWebpackPlugin.options.title %>
-  </title>
-  <meta name="description" content="Offline-first browser text editor with syntax highlighting and PWA support." />
-  <meta name="theme-color" content="#225ca3" />
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <meta
+    name="description"
+    content="JATE is an installable offline-first text editor with syntax highlighting and local persistence."
+  />
+  <meta name="theme-color" content="#12141a" />
   <link rel="manifest" href="/manifest.json" />
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css" crossorigin="anonymous">
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"
-    crossorigin="anonymous">
-  </script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/javascript/javascript.min.js"
-    crossorigin="anonymous">
-  </script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css"
-    crossorigin="anonymous">
 </head>
 
 <body>
-  <nav id="navbar">
-    <div class="nav-btn">
-      <button class="btn btn-sm btn-dark" id="buttonInstall" aria-label="Install this app" type="button">Install</button>
+  <nav id="navbar" aria-label="Application">
+    <div class="brand-lockup" aria-label="JATE, Just Another Text Editor">
+      <span class="brand-mark" aria-hidden="true">J</span>
+      <div class="brand-copy">
+        <span class="brand-name">J.A.T.E.</span>
+        <span class="brand-subtitle">Just Another Text Editor</span>
+      </div>
     </div>
-    <h1>Just Another Text Editor</h1>
 
-    <div class="navbar-brand"><img src="./assets/icons/icon_96x96.png" alt="" /></div>
+    <button class="install-button hidden" id="buttonInstall" aria-label="Install JATE" type="button">
+      Install
+    </button>
   </nav>
 
-  <main id="main">
+  <main id="main" aria-label="Text editor">
     <div class="loading-container">
-      <div class="loading-spinner"></div>
+      <div class="loading-spinner" aria-label="Loading editor"></div>
     </div>
   </main>
   <noscript>

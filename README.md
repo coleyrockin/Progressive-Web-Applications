@@ -1,156 +1,122 @@
-# Progressive Web Applications — JATE
+# JATE — Offline-First PWA Text Editor
 
 ![Webpack](https://img.shields.io/badge/Webpack-5.x-8DD6F9?style=flat&logo=webpack&logoColor=white)
-![PWA](https://img.shields.io/badge/PWA-Installable-5A0FC8?style=flat&logo=googlechrome&logoColor=white)
-![IndexedDB](https://img.shields.io/badge/IndexedDB-Storage-FF6F00?style=flat)
+![PWA](https://img.shields.io/badge/PWA-Installable-31D2A5?style=flat&logo=googlechrome&logoColor=white)
+![IndexedDB](https://img.shields.io/badge/IndexedDB-Local%20Persistence-F4B860?style=flat)
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=flat&logo=express&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat&logo=node.js&logoColor=white)
 ![License](https://img.shields.io/badge/License-ISC-blue?style=flat)
 
-## About
+JATE is an installable Progressive Web App for writing notes and JavaScript snippets in the browser. It bundles the editor locally, precaches the app shell with Workbox, and persists drafts through IndexedDB with a `localStorage` fallback.
 
-**JATE** (Just Another Text Editor) is a single-page Progressive Web App. The editor runs in the browser, persists content to IndexedDB with a `localStorage` fallback, registers a Workbox-driven service worker for offline use, and can be installed as a standalone app.
+![JATE app screenshot](./assets/images/PMAtexteditor.png)
 
-### User story
+## Highlights
 
-> As a user, I want to create notes or code snippets with or without internet, so I can reliably access them later.
+- **Offline-first editor**: CodeMirror is bundled into the Webpack build, so the editor is not dependent on a CDN.
+- **Installable PWA**: Web app manifest, generated icons, install prompt handling, and service-worker precaching.
+- **Resilient persistence**: IndexedDB stores the canonical draft, while `localStorage` keeps a fast fallback copy.
+- **Production server**: Express serves the built client with `helmet()` security headers and graceful shutdown handling.
+- **Portfolio-ready UX**: polished app shell, responsive layout, accessible controls, and clear loading/error states.
 
-## Live demo
+## Tech Stack
 
-The original Heroku deployment was retired when the Heroku free tier ended in November 2022. Run locally — see **Install and run** below.
+| Layer | Tools |
+| --- | --- |
+| Front end | JavaScript, CodeMirror 5, CSS |
+| Build | Webpack 5, Babel, HtmlWebpackPlugin |
+| PWA | Workbox, Service Worker, Web App Manifest |
+| Storage | IndexedDB via `idb`, `localStorage` fallback |
+| Server | Node.js, Express, Helmet |
 
-## Screenshot
+## Architecture
 
-![App screenshot](./assets/images/PMAtexteditor.png)
-
-## Features
-
-- **PWA Installable** — manifest + service worker; installable on supported browsers
-- **Offline-capable** — Workbox precaches the app shell and assets for offline use after first load
-- **Resilient persistence** — IndexedDB is primary, `localStorage` is fallback, header-string is last-resort default
-- **Code editor** — syntax-highlighted via CodeMirror with the Monokai theme
-- **Auto-save** — content is written to `localStorage` on every change and to IndexedDB on blur
-- **Bundled** — Webpack 5 with Workbox `InjectManifest` and `webpack-pwa-manifest`
-
-## Tech stack
-
-| Category | Technology |
-|----------|------------|
-| Bundler | Webpack 5 |
-| Runtime | Node.js 20+ |
-| Server | Express.js 4 (static) |
-| Storage | IndexedDB (`idb`), `localStorage` |
-| PWA | Workbox, Service Workers, Web App Manifest |
-| Editor | CodeMirror 5 |
-| Dev tools | Concurrently, Nodemon |
-
-## Repo structure
-
-```text
-Progressive-Web-Applications/
-├── assets/images/      # Screenshots
-├── client/             # Webpack-bundled PWA front end
-│   ├── dist/           # Built artifacts served in production
-│   ├── src/            # Editor source (js, css, images)
-│   ├── index.html      # HTML template
-│   ├── src-sw.js       # Workbox service worker source
-│   └── webpack.config.js
-├── server/             # Express static server
-│   ├── routes/         # html routes (catch-all to client/dist/index.html)
-│   └── server.js       # Server entry point
-├── .env.example
-├── .nvmrc              # Node 20
-└── package.json
+```mermaid
+flowchart LR
+  Browser["Browser editor"] --> LocalStorage["localStorage fallback"]
+  Browser --> IndexedDB["IndexedDB draft store"]
+  Browser --> ServiceWorker["Workbox service worker"]
+  ServiceWorker --> Cache["Precached app shell"]
+  Express["Express server"] --> Dist["client/dist"]
+  Dist --> Browser
 ```
 
-## Prerequisites
+## Getting Started
 
-- Node.js 20+ (see `.nvmrc`)
-- npm 9+
+Use Node.js 20 or newer.
+
+```bash
+npm install
+npm run build
+npm start
+```
+
+The app runs at [http://localhost:3000](http://localhost:3000) by default.
+
+For development:
+
+```bash
+npm run dev
+```
 
 ## Environment
+
+Copy the sample environment file if you want to override defaults:
 
 ```bash
 cp .env.example .env
 ```
 
-Variables:
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `PORT` | Express server port | `3000` |
+| `NODE_ENV` | Runtime environment label | unset |
 
-- `PORT` — port for Express (default: `3000`)
-- `NODE_ENV` — optional environment hint
+## Verification Checklist
 
-## Install and run
+- Production build completes with `npm run build`.
+- App loads without console errors.
+- Editor accepts typing and keeps syntax highlighting.
+- Content persists after reload.
+- Service worker registers in supported browsers.
+- Install prompt appears on install-capable browsers.
 
-```bash
-# From the repo root
-npm install     # also installs client deps via postinstall
-npm run build   # webpack production build → client/dist/
-npm start       # build + node server/server.js
+## Project Structure
+
+```text
+Progressive-Web-Applications/
+├── assets/images/        # README screenshot
+├── client/               # Webpack PWA client
+│   ├── dist/             # Production build output
+│   ├── src/css/          # App shell styles
+│   ├── src/js/           # Editor, storage, install, and SW registration logic
+│   ├── src/images/       # PWA source icon
+│   ├── index.html        # HTML template
+│   └── webpack.config.js
+├── server/               # Express static server
+├── .env.example
+├── .nvmrc
+└── package.json
 ```
 
-For development:
+## Security And Privacy
 
-```bash
-npm run start:dev   # nodemon server + webpack dev server
-```
+- Editor content stays local to the browser.
+- No accounts, API keys, or external data writes are used.
+- `.env` files are ignored; `.env.example` documents safe defaults.
+- Express disables `X-Powered-By` and applies Helmet security headers with a focused CSP.
 
-The production server statically serves `client/dist/`.
+## Roadmap
 
-## How to test
-
-Manual smoke checks:
-
-- Loads without console errors
-- Editor initializes and accepts typing
-- Content persists across reload
-- Service worker registers in supported browsers
-- Install prompt appears on supported browsers/devices
-
-Future automated coverage (see *Future improvements*):
-
-- Playwright smoke checks for install/offline workflows
-- Lighthouse PWA and accessibility audits
-
-## Security notes
-
-- No API keys, user accounts, or privileged actions are stored in this app.
-- All editor input is local-only.
-- `.env` is git-ignored. `.env.example` is the shared template.
-- Server hardening:
-  - `helmet()` baseline security headers (CSP intentionally disabled — see *Future improvements*)
-  - `X-Powered-By` disabled
-  - JSON 404 for unknown routes
-  - Generic 500 error handler
-  - Graceful shutdown on `SIGTERM` / `SIGINT`
-
-## What I learned
-
-- Resilient offline-first frontends require explicit fallback paths, not just one storage technology.
-- PWA behavior is a product concern, not a build artifact concern — service-worker caching strategy needs to be picked deliberately.
-- Keeping a single active execution path (rather than carrying half-finished alternates) makes a project trustworthy.
-
-## Known limitations
-
-- CodeMirror is loaded from a CDN. The editor will not initialize on a cold offline visit until that CDN bundle has been cached by the browser at least once.
-- Install/launch behavior depends on browser support.
-
-## Future improvements
-
-- Bundle CodeMirror locally so the editor is genuinely offline-first on first visit.
-- Migrate to CodeMirror v6 (`@codemirror/*`) for a smaller, modern API.
-- Add Playwright smoke tests and Lighthouse CI.
-- Bundle CodeMirror locally so a strict Content-Security-Policy can be re-enabled (currently disabled because `cdnjs.cloudflare.com` is required for the editor).
-- GitHub Actions: build + lint on push/PR.
+- Add Playwright smoke tests for persistence, offline reloads, and install behavior.
+- Add Lighthouse CI for PWA and accessibility checks.
+- Modernize older starter dependencies to reduce audit noise.
+- Add a hosted demo link.
 
 ## Author
 
-- [@coleyrockin](https://github.com/coleyrockin)
-- [coleyrockin@aol.com](mailto:coleyrockin@aol.com)
+Built by [Boyd Roberts](https://github.com/coleyrockin).
 
 ## License
 
-ISC — see [`LICENSE`](./LICENSE).
-
----
-
-Built by [Boyd Roberts](https://github.com/coleyrockin)
+ISC — see [LICENSE](./LICENSE).

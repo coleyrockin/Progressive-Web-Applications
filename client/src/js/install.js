@@ -7,6 +7,7 @@ if (!butInstall) {
 butInstall.classList.add('hidden');
 
 window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
   window.deferredPrompt = event;
   butInstall.classList.remove('hidden');
 });
@@ -25,6 +26,7 @@ butInstall.addEventListener('click', async () => {
   butInstall.classList.toggle('hidden', true);
 });
 
-window.addEventListener('appinstalled', (event) => {
+window.addEventListener('appinstalled', () => {
   window.deferredPrompt = null;
+  butInstall.classList.add('hidden');
 });

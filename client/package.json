@@ -1,12 +1,23 @@
 {
-  "name": "jate",
+  "name": "jate-client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Webpack front end for the JATE offline-first text editor.",
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack --mode production",
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "watch": "webpack --watch"
   },
-  "author": "2U",
-  "license": "UNLICENSED",
+  "author": "Boyd Roberts",
+  "license": "ISC",
+  "keywords": [
+    "pwa",
+    "offline-first",
+    "codemirror",
+    "indexeddb",
+    "workbox"
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-runtime": "^7.15.0",
@@ -15,20 +26,16 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
-    "http-server": "^0.11.1",
     "style-loader": "^3.2.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.0.0",
+    "webpack-dev-server": "^5.2.3",
     "webpack-pwa-manifest": "^4.3.0",
-    "workbox-webpack-plugin": "^6.2.4"
+    "workbox-webpack-plugin": "^7.4.1"
   },
   "dependencies": {
-    "code-mirror-themes": "^1.0.0",
+    "codemirror": "^5.65.21",
     "idb": "^6.1.2"
   },
-  "version": "1.0.0",
-  "main": "src-sw.js",
-  "keywords": [],
-  "description": ""
+  "main": "src-sw.js"
 }

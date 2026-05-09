@@ -1,233 +1,242 @@
 /* app shell CSS */
 :root {
-  --primary: #31a9e1;
-  --gray: #ececec;
-  --whitesmoke: #f5f5f5;
-  --dark: #222;
-  --monoaki: #272822;
-  --navbar-height: 50px;
+  --navbar-height: 72px;
+  --app-bg: #12141a;
+  --app-surface: #171a22;
+  --app-border: #2b303b;
+  --editor-bg: #272822;
+  --text: #f8fafc;
+  --muted: #a7adba;
+  --accent: #31d2a5;
+  --accent-contrast: #071311;
+  --warning: #f4b860;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
   margin: 0;
-  background-color: var(--monoaki);
-  color: #f8f8f8;
-  font-family: 'Inter', 'SF Pro Display', 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-}
-
-h1 {
-  font-size: 22px;
+  background: var(--app-bg);
+  color: var(--text);
+  font-family: Inter, "SF Pro Display", "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 #navbar {
-  height: var(--navbar-height);
-  background-color: var(--primary);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  min-height: var(--navbar-height);
+  padding: 0 1.25rem;
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
-  font-size: 22px;
-  font-weight: 550;
-  letter-spacing: 0.9px;
+  gap: 1rem;
 }
 
-.navbar-brand img {
-  padding-top: 10px;
-}
-
-.loading-spinner {
-  animation-duration: 0.75s;
-  animation-iteration-count: infinite;
-  animation-name: rotate-forever;
-  animation-timing-function: linear;
-  height: 30px;
-  width: 30px;
-  border: 3px solid var(--primary);
-  border-right-color: transparent;
-  border-radius: 50%;
-}
-
-.loading-container {
+.brand-lockup {
+  min-width: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: calc(100vh - var(--navbar-height));
+  gap: 0.85rem;
 }
 
-@keyframes rotate-forever {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(49, 210, 165, 0.45);
+  border-radius: 8px;
+  background: #0f1517;
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 1.35rem;
+  font-weight: 800;
 }
 
-.app-update {
-  display: none;
-  position: absolute;
-  right: 10px;
+.brand-copy {
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
 }
 
-.app-update.show {
-  display: block;
+.brand-name,
+.brand-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.nav-btn {
-  margin: 25px;
-}
-
-.btn {
-  text-align: center;
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  margin: 0;
-  text-decoration: none;
+.brand-name {
+  color: var(--text);
   font-size: 1rem;
-  border-radius: 0.3rem;
-  border: 1px solid transparent;
-  outline: none;
-  color: #111827;
-  background-color: #d1d5db;
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
-.btn:focus-visible {
-  outline: 3px solid #93c5fd;
-  outline-offset: 2px;
-}
-
-.btn:hover {
-  background-color: #9ca3af;
-}
-
-.btn.btn-squared {
-  border-radius: 0;
-}
-
-.btn.btn-sm {
+.brand-subtitle {
+  color: var(--muted);
   font-size: 0.85rem;
-  padding: 0.3rem 0.9rem;
+  letter-spacing: 0;
 }
 
-.btn.btn-lg {
-  font-size: 1.25rem;
-  padding: 0.8rem 1.4rem;
+.install-button {
+  min-width: 92px;
+  min-height: 40px;
+  border: 1px solid rgba(49, 210, 165, 0.5);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  transition: background-color 0.18s ease, border-color 0.18s ease,
+    transform 0.18s ease;
 }
 
-.btn.btn-block {
-  width: 100%;
-  display: block;
-  text-align: center;
+.install-button:hover {
+  background: #73e4c6;
+  border-color: #73e4c6;
 }
 
-.btn.btn-primary {
-  background-color: #2d3e50;
-  color: #d9e9e8;
+.install-button:active {
+  transform: translateY(1px);
 }
 
-.btn.btn-primary:hover {
-  background-color: #57779a;
-}
-
-.btn.btn-danger {
-  background-color: #e64c66;
-  color: #ffffff;
-}
-
-.btn.btn-danger:hover {
-  background-color: #ee8294;
-}
-
-.btn.btn-info {
-  background-color: #1bbc9b;
-  color: #ffffff;
-}
-
-.btn.btn-info:hover {
-  background-color: #31e1bd;
-}
-
-.btn.btn-light {
-  background-color: #d9e9e8;
-  color: #1a1a1a;
-}
-
-.btn.btn-light:hover {
-  background-color: #84b8b4;
-}
-
-.btn.btn-dark {
-  background-color: #1a1a1a;
-  color: #d9e9e8;
-}
-
-.btn.btn-dark:hover {
-  background-color: #5f5f5f;
+.install-button:focus-visible {
+  outline: 3px solid rgba(244, 184, 96, 0.75);
+  outline-offset: 3px;
 }
 
 .hidden {
   display: none !important;
 }
 
+#main {
+  height: calc(100vh - var(--navbar-height));
+  background: var(--editor-bg);
+  overflow: hidden;
+}
+
+.loading-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(248, 250, 252, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: rotate-forever 0.75s linear infinite;
+}
+
+.CodeMirror {
+  height: 100%;
+  background: var(--editor-bg);
+  color: #f8f8f2;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 1.25rem;
+}
+
+.CodeMirror-gutters {
+  background: #202126;
+  border-right: 1px solid #343842;
+  padding-right: 0.35rem;
+}
+
+.CodeMirror-linenumber {
+  color: #858b9a;
+}
+
+.CodeMirror-cursor {
+  border-left: 2px solid var(--warning);
+}
+
+.CodeMirror-selected {
+  background: rgba(49, 210, 165, 0.18) !important;
+}
+
 .editor-error {
-  margin: 1.5rem;
-  border: 1px solid #ef4444;
-  border-radius: 0.5rem;
+  width: min(640px, calc(100% - 2rem));
+  margin: 1.5rem auto;
+  border: 1px solid rgba(239, 68, 68, 0.55);
+  border-radius: 8px;
   background: rgba(239, 68, 68, 0.12);
   color: #fecaca;
   padding: 1rem;
-  max-width: 640px;
-  margin-inline: auto;
   text-align: left;
 }
 
-.btn.btn-white {
-  background-color: #ffffff;
-  color: #1a1a1a;
+.editor-error p {
+  margin: 0 0 0.65rem;
 }
 
-.btn.btn-white:hover {
-  background-color: #cccccc;
+.editor-error p:last-child {
+  margin-bottom: 0;
 }
 
-.btn.btn-black {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-.btn.btn-black:hover {
-  background-color: #666666;
-}
-
-.btn.btn-link {
-  background-color: #1b89bc;
-  color: #ffffff;
-}
-
-.btn.btn-link:hover {
-  background-color: #31a9e1;
-}
-
-@media only screen and (max-width: 600px) {
-  .nav-btn {
-    display: none;
+@keyframes rotate-forever {
+  from {
+    transform: rotate(0deg);
   }
 
-  .navbar-brand {
-    display: none;
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --navbar-height: 64px;
   }
 
   #navbar {
-    justify-content: center;
+    padding: 0 0.85rem;
   }
 
-  h1 {
-    font-size: 18px;
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .install-button {
+    min-width: 82px;
+  }
+
+  .CodeMirror {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .install-button,
+  .loading-spinner {
+    animation: none;
+    transition: none;
   }
 }

@@ -8,7 +8,7 @@ module.exports = () => {
     mode: 'development',
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js'
+      install: './src/js/install.js',
     },
     output: {
       filename: '[name].bundle.js',
@@ -17,7 +17,7 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
-        title: 'J.A.T.E'
+        title: 'JATE | Offline Text Editor',
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
@@ -27,10 +27,12 @@ module.exports = () => {
         fingerprints: false,
         inject: true,
         name: 'Just Another Text Editor',
-        short_name: 'J.A.T.E',
-        description: 'Takes notes with JavaScript syntax highlighting!',
-        background_color: '#225ca3',
-        theme_color: '#225ca3',
+        short_name: 'JATE',
+        description:
+          'Installable offline-first text editor with JavaScript syntax highlighting and local persistence.',
+        background_color: '#12141a',
+        theme_color: '#12141a',
+        display: 'standalone',
         start_url: '/',
         publicPath: '/',
         icons: [

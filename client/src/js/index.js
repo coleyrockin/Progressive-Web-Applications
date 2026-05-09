@@ -4,6 +4,11 @@ import './database';
 import '../css/style.css';
 
 const main = document.querySelector('#main');
+
+if (!main) {
+  throw new Error('Editor mount point not found');
+}
+
 main.innerHTML = '';
 
 const showEditorFallback = (message) => {

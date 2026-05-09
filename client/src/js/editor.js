@@ -1,17 +1,21 @@
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/theme/monokai.css';
 import { getDb, putDb } from './database';
 import { header } from './header';
 
-export default class {
+export default class Editor {
   constructor() {
     const localData = localStorage.getItem('content');
     const fallbackContent = header.trim();
+    const editorRoot = document.querySelector('#main');
 
-    // check if CodeMirror is loaded
-    if (typeof CodeMirror === 'undefined') {
-      throw new Error('CodeMirror is not loaded');
+    if (!editorRoot) {
+      throw new Error('Editor mount point not found');
     }
 
-    this.editor = CodeMirror(document.querySelector('#main'), {
+    this.editor = CodeMirror(editorRoot, {
       value: '',
       mode: 'javascript',
       theme: 'monokai',
@@ -22,7 +26,8 @@ export default class {
       tabSize: 2,
     });
 
-    // When the editor is ready, set the value to whatever is store in indexeddb
+    this.editor.setSize('100%', '100%');
+
     getDb()
       .then((data) => {
         this.editor.setValue(data || localData || fallbackContent);
@@ -39,7 +44,6 @@ export default class {
       }
     });
 
-    // Save the content of the editor when the editor itself is loses focus
     this.editor.on('blur', () => {
       const latestContent = localStorage.getItem('content') || '';
       putDb(latestContent).catch((error) => {
